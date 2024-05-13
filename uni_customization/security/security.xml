@@ -1,0 +1,157 @@
+<?xml version="1.0"?>
+<odoo>
+    <data>
+
+	    <record id="group_mark_as_to_do" model="res.groups">
+            <field name="name">Inventory Mark as To Do</field>
+        </record>
+
+
+	    <record id="group_validate" model="res.groups">
+            <field name="name">Inventory Validate</field>
+        </record>
+
+
+         <record id="group_invoicing_menu" model="res.groups">
+            <field name="name">Invoicing Menu</field>
+        </record>
+         <record id="account.menu_finance" model="ir.ui.menu">
+            <field name="groups_id" eval="[(5,ref('group_invoicing_menu'))]" />
+        </record>
+
+
+
+
+        <!-- <record id="menu_product_brand" model="ir.ui.menu">
+            <field name="name">Product Brand</field>
+               
+            <field name="view_mode">tree,form</field>
+            <field name="view_id" ref="stock.menu_reordering_rules_config"/>
+            <field name="target">new</field>
+        </record>  -->
+
+
+<!--        inventory valuation report-->
+        <record id="group_inventory_valuation_report_permission" model="res.groups">
+            <field name="name">Inventory Valuation Report Permission</field>
+        </record>
+        <record id="stock_account.menu_valuation" model="ir.ui.menu">
+            <field name="groups_id" eval="[(5,ref('group_inventory_valuation_report_permission'))]"/>
+        </record>
+
+<!--        forecasted inventory report-->
+        <record id="group_forecasted_inventory_report_permission" model="res.groups">
+            <field name="name">Forecasted Inventory Report Permission</field>
+        </record>
+
+<!--        stock move report-->
+        <record id="group_stock_move_report_permission" model="res.groups">
+            <field name="name">Stock Move Report Permission</field>
+        </record>
+
+<!--        product move report-->
+        <record id="group_product_move_report_permission" model="res.groups">
+            <field name="name">Product Move Report Permission</field>
+        </record>
+
+<!--                sale product menu -->
+        <record id="group_sale_product_permission" model="res.groups">
+            <field name="name">Sale Product Sub Menu Permission</field>
+        </record>
+
+<!--                sale product variant menu -->
+        <record id="group_sale_product_variants_permission" model="res.groups">
+            <field name="name">Sale Product Variants Permission</field>
+        </record>
+
+<!--        inventory report menu-->
+        <record id="group_inventory_report_permission" model="res.groups">
+            <field name="name">Inventory Report Permission</field>
+        </record>
+
+<!--        Sale Product Menu-->
+        <record id="group_sales_product_menu_permission" model="res.groups">
+            <field name="name">Sale Product Menu Permission</field>
+        </record>
+
+        <!--        Inventory Overview-->
+        <record id="group_stock_picking_type_menu" model="res.groups">
+            <field name="name">Inventory Overview Permission</field>
+        </record>
+
+        <!--        Inventory Operations-->
+        <record id="group_inventory_operation_menu_permission" model="res.groups">
+            <field name="name">Inventory Operations Permission</field>
+        </record>
+
+        <!--        Inventory Configuration-->
+        <record id="group_inventory_configuration_menu_permission" model="res.groups">
+            <field name="name">Inventory Configuration Permission</field>
+        </record>
+
+        <!--        Inventory Product-->
+        <record id="group_inventory_product_menu_permission" model="res.groups">
+            <field name="name">Inventory Product Permission</field>
+        </record>
+
+<!--        Repair Menu-->
+        <record id="group_repair_menu_permission" model="res.groups">
+            <field name="name">Repair Menu</field>
+        </record>
+
+<!--        Sale Pricelist Menu-->
+        <record id="group_product_pricelist_permission" model="res.groups">
+            <field name="name">Sale Pricelist Permission</field>
+        </record>
+
+<!--        Inventory product sub menu -->
+        <record id="group_inventory_product_sub_menu_permission" model="res.groups">
+            <field name="name">Inventory Product Sub Menu Permission</field>
+        </record>
+
+<!--        Inventory Product Variant menu-->
+        <record id="group_product_variant_menu_permission" model="res.groups">
+            <field name="name">Inventory Product Variants Permission</field>
+        </record>
+
+        <!--        Inventory Replenishment Menu-->
+        <record id="group_replenishment_menu_permission" model="res.groups">
+            <field name="name">Reordering Rule Replenishment Menu</field>
+        </record>
+
+<!--Hide Value field in Inventory Report-->
+        <record model="ir.module.category" id="group_inventory_value_visibility">
+            <field name="name">Inventory Value</field>
+            <field name="description">Access value field</field>
+            <field name="sequence">3</field>
+        </record>
+        <record id="inventory_user" model="res.groups">
+            <field name="name">Inventory User</field>
+            <field name="category_id" ref="uni_customization.group_inventory_value_visibility"/>
+        </record>
+
+
+        <!--        Hide Valuation Button inventory operation transfer & Landed Costs-->
+        <record model="ir.module.category" id="group_valuation_button_hide">
+            <field name="name">Valuation Button</field>
+            <field name="description">Access valuation button</field>
+            <field name="sequence">3</field>
+        </record>
+        <record id="inventory_valuation_user" model="res.groups">
+            <field name="name">Inventory User</field>
+            <field name="category_id" ref="uni_customization.group_valuation_button_hide"/>
+        </record>
+
+<!--        product move button,invoice button hide,unlink for repair users-->
+        <record model="ir.module.category" id="group_repair_user_uni">
+            <field name="name">Repair Unlink</field>
+            <field name="description">Access repair Unlink</field>
+            <field name="sequence">4</field>
+        </record>
+        <record id="repair_user" model="res.groups">
+            <field name="name">Repair User</field>
+            <field name="category_id" ref="uni_customization.group_repair_user_uni"/>
+        </record>
+
+    </data>
+</odoo>

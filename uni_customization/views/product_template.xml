@@ -1,0 +1,24 @@
+<odoo>
+<data>
+<record id="uni_view_order_form" model="ir.ui.view">
+            <field name="name">product.template.product.form</field>
+            <field name="model">product.template</field>
+            <field name="inherit_id" ref="product.product_template_form_view"/>
+            <field name="arch" type="xml"> 
+              
+            
+                <xpath expr="//field[@name='categ_id']" position="after">
+                        <field name="product_brand"/>
+                        <field name="imp_code"/>
+                </xpath>
+                <xpath expr="//form/sheet/notebook/page[1]/group[2]" position="before">
+                    <group string="Product Specification">
+                        <field name="specification" nolabel="1" placeholder="This note is only for Product Specification"/>
+                    </group>
+                </xpath>
+
+            </field>
+            
+</record>
+</data>
+</odoo>

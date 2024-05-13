@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <template id="custom_sale_report" inherit_id="stock.report_picking">
+
+        <xpath expr="//t/t/t/div[@class='page']/table[1]/t[@t-set='has_serial_number']" position="after">
+            <t t-set="has_remark" t-value="any(move_line.remark for move_line in o.move_lines)"/>
+        </xpath>
+
+        <xpath expr="//t/t/t/div[@class='page']/table[1]/thead/tr/th[@name='th_barcode']" position="after">
+             <th name="th_remark" class="text-center" t-if="has_remark">
+                   <strong>SO Remark</strong>
+             </th>
+        </xpath>
+
+        <xpath expr="//t/t/t/div[@class='page']/table[1]/tbody/t/tr/td[6]" position="after">
+                 <td class="text-center" t-if="has_remark">
+                    <t t-set="remark" t-value="ml.move_id.remark"/>
+                     <span t-field="ml.move_id.remark"/>
+                 </td>
+
+        </xpath>
+
+    </template>
+</odoo>

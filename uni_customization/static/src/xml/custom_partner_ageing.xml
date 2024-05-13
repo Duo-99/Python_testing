@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+    <templates id="custom_partner_ageing_view"  xml:space="preserve">
+        <t t-name="custom_partner_ageing_view" t-inherit="account_dynamic_reports.FilterSectionPa" t-inherit-mode="extension">
+            <xpath expr="//t/div[2]/div[@class='py-cntrl-left']/div[@class='py-ctrl-buttons']/button[@id='xlsx']" position="after">
+                <button type="button" class="btn py-btn-primary" id="partner_xlsx" action="print_partner_xlsx" style="position: relative;">AR Confirmation Report</button>
+            </xpath>
+        </t>
+    </templates>
+

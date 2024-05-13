@@ -1,0 +1,11 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_menu_township,access_township,model_township,base.group_user,1,1,1,1
+access_menu_city,access_city,model_city,base.group_user,1,1,1,1
+access_menu_state,access_state,model_state,base.group_user,1,1,1,1
+access_menu_product_brand,access_product_brand,model_product_brand,base.group_user,1,1,1,1
+access_menu_ca_category,access_ca_category,model_ca_category,base.group_user,1,1,1,1
+access_menu_order_type,access_order_type,model_order_type,base.group_user,1,1,1,1
+
+
+
+

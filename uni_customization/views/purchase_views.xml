@@ -1,0 +1,62 @@
+<odoo>
+    <data>
+
+        <record id="view_purchase_order_cuz" model="ir.ui.view">
+            <field name="name">purchase.order</field>
+            <field name="inherit_id" ref="purchase.purchase_order_form"/>
+            <field name="model">purchase.order</field>
+            <field name="priority" eval="15"/>
+            <field name="arch" type="xml">
+                <field name="partner_id" position="replace">
+                    <field name="partner_id" widget="res_partner_many2one" context="{'res_partner_search_mode': 'supplier', 'show_vat': True}"
+                           options='{"no_create": True, "no_create_edit": True}'
+                                placeholder="Name, TIN, Email, or Reference"
+                            />
+                </field>
+                <field name="currency_id" position="replace">
+                    <field name="currency_id" groups="base.group_multi_currency" force_save="1" options='{"no_create": True, "no_create_edit": True}'/>
+                </field>
+                <xpath expr="//tree/field[@name='product_id']" position="replace">
+                    <field
+                                        name="product_id"
+                                        attrs="{
+                                            'readonly': [('state', 'in', ('purchase', 'to approve','done', 'cancel'))],
+                                            'required': [('display_type', '=', False)],
+                                        }"
+                                        context="{'partner_id':parent.partner_id, 'quantity':product_qty,'uom':product_uom, 'company_id': parent.company_id}"
+                                        options='{"no_create": True, "no_create_edit": True}'
+                                        force_save="1" domain="[('purchase_ok', '=', True), '|', ('company_id', '=', False), ('company_id', '=', parent.company_id)]"/>
+                     <field name="imp_code"/>
+                </xpath>
+
+                <field name="price_subtotal" position="after">
+                    <field name="remark" string="Remark"/>
+                </field>
+
+            </field>
+        </record>
+         <record id="uni_purchase_order_kpis_tree" model="ir.ui.view">
+            <field name="name">uni.purchase.order.inherit.purchase.order.tree</field>
+            <field name="model">purchase.order</field>
+            <field name="inherit_id" ref="purchase.purchase_order_kpis_tree"/>
+             <field name="arch" type="xml">
+                 <field name="invoice_status" position="before">
+                    <field name="delivery_status" />
+                    </field>
+            </field>
+         </record>
+
+        <record id="uni_purchase_order_tree" model="ir.ui.view">
+            <field name="name">uni.purchase.order.tree</field>
+            <field name="model">purchase.order</field>
+            <field name="inherit_id" ref="purchase.purchase_order_view_tree"/>
+            <field name="arch" type="xml">
+                 <field name="invoice_status" position="before">
+                    <field name="delivery_status"/>
+                     <field name="stock_received"/>
+                     <field name="need_to_bill"/>
+                 </field>
+            </field>
+        </record>
+    </data>
+</odoo>

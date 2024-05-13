@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="utf-8" ?>
+
+<odoo>
+    <record id="unique_sequence_id" model="ir.sequence">
+   <field name="name">Sequence Name Goes Here</field>
+   <field name="code">pp.sequence.code</field>
+   <field name="active">TRUE</field>
+   <field name="prefix">INV/PP/</field>
+   <field name="padding">5</field>
+   <field name="number_next">1</field>
+   <field name="number_increment">1</field>
+</record>
+        <record id="ideahome_sequence_id" model="ir.sequence">
+   <field name="name">Idea Home Sequence</field>
+   <field name="code">ih.sequence.code</field>
+   <field name="active">TRUE</field>
+   <field name="prefix">INV/IH/</field>
+   <field name="padding">5</field>
+   <field name="number_next">1</field>
+   <field name="number_increment">1</field>
+</record>
+    <record id="pvf_sequence_id" model="ir.sequence">
+   <field name="name">PVF Sequence</field>
+   <field name="code">pvf.sequence.code</field>
+   <field name="active">TRUE</field>
+   <field name="prefix">INV/PVF/</field>
+   <field name="padding">5</field>
+   <field name="number_next">1</field>
+   <field name="number_increment">1</field>
+</record>
+
+    <record id="report_uni_sale_invoice" model="ir.actions.report">
+            <field name="name">Uni Sale Invoice</field>
+            <field name="model">account.move</field>
+            <field name="report_name">account.move.sale.invoice</field>
+            <field name="report_type">py3o</field>
+            <field name="py3o_filetype">pdf</field>
+            <field name="module">uni_customization</field>
+            <field name="py3o_template_fallback">demo/uni_sale_invoice.odt</field>
+             <field name="binding_model_id" ref="account.model_account_move"/>
+            <field name="binding_type">report</field>
+        </record>
+        <record id="report_uni_sale_quotation" model="ir.actions.report">
+            <field name="name">Uni Sale Quotation</field>
+            <field name="model">sale.order</field>
+            <field name="report_name">uni.sale.order.quotation</field>
+            <field name="report_type">py3o</field>
+            <field name="py3o_filetype">pdf</field>
+            <field name="module">uni_customization</field>
+            <field name="py3o_template_fallback">demo/uni_sale_quotation.odt</field>
+             <field name="binding_model_id" ref="sale.model_sale_order"/>
+            <field name="binding_type">report</field>
+        </record>
+
+
+            <record id="report_uni_delivery_format" model="ir.actions.report">
+            <field name="name">Uni Delivery Format</field>
+            <field name="model">stock.picking</field>
+            <field name="report_name">uni.stock.delivery.format</field>
+            <field name="report_type">py3o</field>
+            <field name="py3o_filetype">pdf</field>
+            <field name="module">uni_customization</field>
+            <field name="py3o_template_fallback">demo/uni_delivery_format.odt</field>
+             <field name="binding_model_id" ref="stock.model_stock_picking"/>
+            <field name="binding_type">report</field>
+        </record>
+    <record id="report_uni_repair_installation" model="ir.actions.report">
+            <field name="name">Analyzer Installation and Training Report</field>
+            <field name="model">repair.order</field>
+            <field name="report_name">uni.repair.installation.format</field>
+            <field name="report_type">py3o</field>
+            <field name="py3o_filetype">pdf</field>
+            <field name="module">uni_customization</field>
+            <field name="py3o_template_fallback">demo/uni_repair_installation.odt</field>
+            <field name="binding_model_id" ref="repair.model_repair_order"/>
+            <field name="binding_type">report</field>
+    </record>
+    <record id="report_uni_payment-receipt1" model="ir.actions.report">
+            <field name="name">Uni Payment Receipt</field>
+            <field name="model">account.payment</field>
+            <field name="report_name">uni.payment.receipt.format</field>
+            <field name="report_type">py3o</field>
+            <field name="py3o_filetype">pdf</field>
+            <field name="module">uni_customization</field>
+            <field name="py3o_template_fallback">demo/uni_payment_receipt1.odt</field>
+            <field name="binding_model_id" ref="account.model_account_payment"/>
+            <field name="binding_type">report</field>
+    </record>
+
+</odoo>

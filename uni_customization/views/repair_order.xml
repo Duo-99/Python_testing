@@ -1,0 +1,324 @@
+<odoo>
+    <data>
+        <record id="customize_view_repair_order_tree" model="ir.ui.view">
+            <field name="name">customize.repair.tree</field>
+            <field name="inherit_id" ref="repair.view_repair_order_tree"/>
+            <field name="model">repair.order</field>
+            <field name="arch" type="xml">
+                <field name="schedule_date" position="before">
+                    <field name="create_date"/>
+                </field>
+                <field name="state" position="after">
+                    <field name="payment_state" widget="badge" decoration-danger="payment_state == 'not_paid'"
+                           decoration-warning="payment_state in ('partial', 'in_payment')"
+                           decoration-success="payment_state in ('paid', 'reversed')"
+                           attrs="{'invisible': [('payment_state', 'in', ('invoicing_legacy'))]}" optional="show"/>
+                </field>
+                <field name="partner_id" position="after">
+                    <field name="assign_service_eng" widget="many2many_tags" domain="[('is_company','=',False)]"/>
+                    <field name="lot_id"/>
+                </field>
+            </field>
+        </record>
+        <record id="customize_view_repair_order_form" model="ir.ui.view">
+            <field name="name">customize.repair.form</field>
+            <field name="inherit_id" ref="repair.view_repair_order_form"/>
+            <field name="model">repair.order</field>
+            <field name="arch" type="xml">
+
+                <xpath expr="//tree/field[@name='tax_id']" position="after">
+                    <field name="discount"/>
+                </xpath>
+
+                <xpath expr="//form/sheet/notebook[1]/page[2]/field/tree/field[@name='tax_id']" position="after">
+                    <field name="discount"/>
+                </xpath>
+
+                <field name="schedule_date" position="before">
+                    <field name="create_date" readonly="1"/>
+                </field>
+                <!--<field name="lot_id" position="after">
+                    <field name="expiration_date" attrs="{'required':[('tracking', 'in', ['serial', 'lot'])], 'invisible': [('tracking', 'not in', ['serial', 'lot'])]}" readonly="1"/>
+                </field>-->
+                <field name="description" position="replace">
+                </field>
+                <field name="user_id" position="replace">
+                </field>
+                <!--            <field name="sale_order_id" position="replace">-->
+                <!--            </field>-->
+                <field name="product_id" position="replace">
+                </field>
+                <field name="lot_id" position="replace">
+                </field>
+                <field name="partner_id" position="replace">
+                </field>
+                <field name="address_id" position="replace"></field>
+                <field name="sale_order_id" position="replace"></field>
+                <field name="create_date" position="replace"></field>
+                <field name="schedule_date" position="replace"></field>
+                <field name="location_id" position="replace"></field>
+                <field name="company_id" position="replace"></field>
+                <field name="guarantee_limit" position="replace"></field>
+                <field name="invoice_method" position="replace"></field>
+                <field name="tag_ids" position="replace"></field>
+                <field name="pricelist_id" position="replace"></field>
+                <xpath expr="//form/sheet/group/group[1]/label" position="replace">
+                </xpath>
+                <xpath expr="//form/sheet/group/group[1]/div" position="replace">
+                </xpath>
+                <xpath expr="//form/sheet/group[1]" position="before">
+                    <group string="Order Information">
+
+                        <group>
+                            <!--                    <field name="sale_order_id"/>-->
+                            <field name="name" string="Order No"/>
+                            <field name="order_type_id" options="{'no_create': True, 'no_create_edit':True}"/>
+                            <field name="ca_category" options="{'no_create': True, 'no_create_edit':True}"/>
+                        </group>
+                        <group>
+                            <field name="description"/>
+                            <field name="user_id"/>
+                            <field name="email"/>
+                            <field name="phone"/>
+                        </group>
+                    </group>
+                    <group string="Customer Information">
+                        <group>
+                            <field name="partner_id"/>
+                            <field name="address_id" groups="sale.group_delivery_invoice_address"/>
+                            <field name="sale_order_id"/>
+                            <field name="street"/>
+                            <field name="street2"/>
+                            <field name="township"/>
+                            <field name="city"/>
+                            <field name="state_name"/>
+                            <field name="country"/>
+                        </group>
+                        <group>
+                            <field name="customer_phone"/>
+                            <field name="customer_mobile"/>
+                            <field name="customer_email"/>
+                        </group>
+
+                    </group>
+                    <group string="Equipment Details">
+
+                        <group>
+                            <field name="product_id"/>
+                            <field name="product_model"/>
+                            <field name="lot_id"/>
+                            <field name="analyzer_type"/>
+                            <!--                        <field name="expiration_date" string="Warranty Expiration" attrs="{'required':[('tracking', 'in', ['serial', 'lot'])], 'invisible': [('tracking', 'not in', ['serial', 'lot'])]}" readonly="1"/>-->
+
+                            <label for="product_qty"/>
+                            <div class="o_row">
+                                <field name="product_qty" attrs="{'readonly':[('tracking', '=', 'serial')]}"/>
+                                <field name="product_uom" groups="uom.group_uom"/>
+                            </div>
+                            <field name="create_date"/>
+                            <field name="location_id"/>
+                            <field name="guarantee_limit"/>
+                            <field name="tag_ids" invisible="1"/>
+                        </group>
+                        <group>
+                            <!--                        <field name="serial_no"/>-->
+                            <field name="warranty_status"/>
+                            <field name="installation_date"/>
+                            <field name="installation_department"/>
+                            <field name="schedule_date"/>
+                            <field name="completed_date"/>
+                            <field name="wrt_start_date"/>
+                            <field name="wrt_end_date"/>
+                            <field name="company_id"/>
+                            <field name="invoice_method"/>
+                            <field name="pricelist_id"/>
+                        </group>
+                    </group>
+
+                    <group string="Service Order Form">
+                        <group>
+
+                            <field name="request_types" string="Request Type"/>
+                            <field name="field_services"
+                                   attrs="{'invisible': [('request_types','!=', 'field_service')]}"/>
+                            <field name="inhouse_services" attrs="{'invisible': [('request_types','!=', 'inhouse')]}"/>
+                        </group>
+                        <group>
+
+
+                            <field name="assign_service_eng" widget="many2many_tags"
+                                   domain="[('is_company','=',False)]"/>
+                            <field name="service_job"
+                                   attrs="{'invisible': ['|',('field_services', '!=', 'service_engineer'),('request_types','!=', 'field_service')]}"/>
+
+                            <!--                            <field name="assign_service_app" widget="many2many_tags" domain="[('is_company','=',False)]" attrs="{'invisible': ['|',('field_services','!=', 'service_application'),('request_types','!=', 'field_service')]}"  />-->
+                            <field name="app_job"
+                                   attrs="{'invisible': ['|',('field_services','!=', 'service_application'),('request_types','!=', 'field_service')]}"/>
+
+                            <!--                            <field name="assign_inhouse_eng" widget="many2many_tags" domain="[('is_company','=',False)]" attrs="{'invisible': ['|',('inhouse_services','!=', 'inhouse_engineer'),('request_types','!=', 'inhouse')]}"  />-->
+                            <field name="inhouse_eng_job"
+                                   attrs="{'invisible': ['|',('inhouse_services', '!=', 'inhouse_engineer'),('request_types','!=', 'inhouse')]}"/>
+
+                            <!--                            <field name="assign_inhouse_app" widget="many2many_tags" attrs="{'invisible': ['|',('inhouse_services','!=', 'inhouse_application'),('request_types','!=', 'inhouse')]}"  />-->
+                            <field name="inhouse_app_job"
+                                   attrs="{'invisible': ['|',('inhouse_services','!=', 'inhouse_application'),('request_types','!=', 'inhouse')]}"/>
+
+                        </group>
+                    </group>
+                </xpath>
+
+                <xpath expr="//form/sheet/notebook" position="attributes">
+                    <attribute name="name">
+                        main_notebook
+                    </attribute>
+                </xpath>
+                <xpath expr="//form/sheet/notebook" position="before">
+                    <notebook name="custom_notebook">
+                        <page string="Installation Condition" name="installCondition">
+                            <group>
+                                <group>
+                                    <field name="calibration" widget='radio' options="{'horizontal': true}"/>
+                                    <field name="test_run" widget='radio' options="{'horizontal': true}"/>
+                                </group>
+                                <group>
+                                    <field name="qc_status" widget='radio' options="{'horizontal': true}"/>
+
+                                    <field name="precision_test"/>
+                                </group>
+                            </group>
+                        </page>
+                        <page string="To Be filled by Customers and Trainee" name="filledBy">
+                            <group>
+
+                                <group>
+                                    <field name="install_train_date"/>
+                                    <field name="anal_condition" widget='radio' options="{'vertical': true}"/>
+
+                                </group>
+                                <group>
+                                    <field name="acc" widget='radio' options="{'horizontal': true}"/>
+                                    <field name="acc_note"/>
+                                    <field name="test_run_status" widget='radio' options="{'horizontal': true}"/>
+                                    <field name="app_train" widget='radio' options="{'horizontal': true}"/>
+                                    <field name="ope_train" widget='radio' options="{'horizontal': true}"/>
+
+                                </group>
+                            </group>
+                        </page>
+                    </notebook>
+                </xpath>
+                <xpath expr="//form/sheet/notebook[2]/page[2]" position="after">
+
+                    <page string="Failure Details And Correction" name="failure_details_and_correction">
+
+                        <group>
+                            <group>
+                                <field name="injured_ans" widget='radio' options="{'horizontal': true}"
+                                       string="Is anyone injured from this issue"/>
+                            </group>
+                            <group>
+                                <field name="correction"/>
+                            </group>
+                        </group>
+                        <group>
+                            <field name="import_request" widget='radio' options="{'vertical': true}"/>
+                            <field name="trouble_hq" widget='radio' options="{'vertical': true}"
+                                   string="Trouble Happening Frequency"/>
+                        </group>
+                        <group string="Phenomennon Of The Problem?">
+                            <field name="phenomenon_of_problem_note"/>
+                        </group>
+
+                        <group string="ERROR MESSAAGE displayed on the machine?">
+                            <field name="error_msg_note"/>
+                        </group>
+                        <group string="What action has been taken to solve the problem?">
+                            <field name="solve_the_problem"/>
+                        </group>
+                    </page>
+                </xpath>
+            </field>
+        </record>
+
+        <record model="ir.ui.view" id="view_repair_order_form_inherit_uni">
+            <field name="name">repair.form.inherit.uni</field>
+            <field name="model">repair.order</field>
+            <field name="inherit_id" ref="uni_customization.customize_view_repair_order_form"/>
+            <field name="groups_id" eval="[(6, 0, [ref('uni_customization.repair_user')])]"/>
+            <field name="arch" type="xml">
+                <field name="partner_id" position="replace">
+                    <field name="partner_id"
+                           options='{"always_reload": True, "no_create": True, "no_create_edit": True, "no_open": True}'/>
+                </field>
+
+                <field name="address_id" position="replace">
+                    <field name="address_id" groups="sale.group_delivery_invoice_address"
+                           options='{"always_reload": True, "no_create": True, "no_create_edit": True, "no_open": True}'/>
+                </field>
+
+                <field name="product_id" position="replace">
+                    <field name="product_id"
+                           options='{"always_reload": True, "no_create": True, "no_create_edit": True, "no_open": True}'/>
+                </field>
+
+                <xpath expr="//tree/field[@name='product_id']" position="replace">
+                    <field name="product_id"
+                           options='{"always_reload": True, "no_create": True, "no_create_edit": True, "no_open": True}'/>
+                </xpath>
+
+                <xpath expr="//form/sheet/notebook[2]/page[2]/field/tree/field[@name='product_id']" position="replace">
+                    <field name="product_id" required="True" context="{'default_type': 'service'}"
+                           options='{"always_reload": True, "no_create": True, "no_create_edit": True, "no_open": True}'/>
+                </xpath>
+
+                <xpath expr="//form/sheet/notebook[2]/page[2]/field/tree/field[@name='product_uom']" position="replace">
+                    <field name="product_uom" string="Unit of Measure" groups="uom.group_uom" optional="show"
+                           options='{"always_reload": True, "no_create": True, "no_create_edit": True, "no_open": True}'/>
+                </xpath>
+
+                <field name="product_uom" position="replace">
+                    <field name="product_uom" groups="uom.group_uom"
+                           options='{"always_reload": True, "no_create": True, "no_create_edit": True, "no_open": True}'/>
+                </field>
+
+                <field name="location_id" position="replace">
+                    <field name="location_id"
+                           options='{"always_reload": True, "no_create": True, "no_create_edit": True, "no_open": True}'/>
+                </field>
+
+                <field name="partner_invoice_id" position="replace">
+                    <field name="partner_invoice_id"
+                           attrs="{'invisible':[('invoice_method','=', 'none')],'required':[('invoice_method','!=','none')]}"
+                           groups="sale.group_delivery_invoice_address"
+                           options='{"always_reload": True, "no_create": True, "no_create_edit": True, "no_open": True}'/>
+                </field>
+
+                <field name="pricelist_id" position="replace">
+                    <field name="pricelist_id"
+                           options='{"always_reload": True, "no_create": True, "no_create_edit": True, "no_open": True}'/>
+                </field>
+
+                <xpath expr="//form/sheet/div/button[1]" position="attributes">
+                    <attribute name="invisible">1</attribute>
+                </xpath>
+
+                <xpath expr="//form/sheet/div/button[2]" position="attributes">
+                    <attribute name="invisible">1</attribute>
+                </xpath>
+            </field>
+        </record>
+
+        <record id="repair_view_repair_order_form_filter_inherit" model="ir.ui.view">
+            <field name="name">repair.view_repair_order_form_filter_inherit</field>
+            <field name="inherit_id" ref="repair.view_repair_order_form_filter"/>
+            <field name="model">repair.order</field>
+            <field name="arch" type="xml">
+                <xpath expr="//search" position="inside">
+                    <field name="lot_id" string="Repair Product Lot/Serial"/>
+                    <field name="lot_id" string="Spare Part Lot/Serial"
+                           filter_domain="[('operations.lot_id', 'ilike', self)]"/>
+                </xpath>
+            </field>
+        </record>
+    </data>
+</odoo>

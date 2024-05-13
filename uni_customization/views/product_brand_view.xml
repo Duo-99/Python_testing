@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <record id="cuz_product_brand_form" model="ir.ui.view">
+            <field name="name">cuz.product.brand.form</field>
+            <field name="model">product.brand</field>
+            <field name="arch" type="xml">
+                <form string="Product Brand">
+                    <sheet>
+                        <group>
+
+                                <field name="name" required="1"/>
+
+                        </group>
+                    </sheet>
+                </form>
+            </field>
+
+        </record>
+        <record id="view_product_brand_tree_cuz" model="ir.ui.view">
+            <field name="name">product.brand.tree</field>
+            <field name="model">product.brand</field>
+            <field name="arch" type="xml">
+                <tree>
+                    <field name="name"/>
+                </tree>
+            </field>
+        </record>
+        <record id="product_brand_menu_action" model="ir.actions.act_window">
+            <field name="name">Product Brand</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">product.brand</field>
+            <field name="view_mode">tree,form</field>
+            <field name="help" type="html">
+                <div t-name="activity-box">
+                <p class="o_view_nocontent_smiling_face">
+                    Create Product Brand!
+                </p>
+                </div>
+            </field>
+        </record>
+        <menuitem id="menu_product_brand" name="Product Brand"
+                  parent="stock.menu_product_in_config_stock"
+                  action="product_brand_menu_action" sequence="10"/>
+    </data>
+</odoo>

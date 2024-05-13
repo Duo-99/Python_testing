@@ -1,0 +1,13 @@
+<odoo>
+    <record id='view_stock_landed_cost_form_uni_inherit' model='ir.ui.view'>
+            <field name="name">stock.landed.cost.form.uni</field>
+            <field name="model">stock.landed.cost</field>
+            <field name="inherit_id" ref="stock_landed_costs.view_stock_landed_cost_form"/>
+            <field name="groups_id" eval="[(6, 0, [ref('uni_customization.inventory_valuation_user')])]"/>
+            <field name="arch" type="xml">
+                <button name="action_view_stock_valuation_layers" position="attributes">
+                    <attribute name="invisible">True</attribute>
+                </button>
+            </field>
+        </record>
+</odoo>

@@ -1,0 +1,31 @@
+<odoo>
+    <data>
+
+        <record id="uni_view_stock_valuation_form" model="ir.ui.view">
+            <field name="name">uni.stock_account.stock_valuation_layer.view.form</field>
+            <field name="inherit_id" ref="stock_account.stock_valuation_layer_form"/>
+            <field name="model">stock.valuation.layer</field>
+            <field name="arch" type="xml">
+
+                <xpath expr="//field[@name='stock_move_id']" position="after">
+                   <field name='ref'/>
+			    </xpath>
+            </field>
+        </record>
+
+    <record id="uni_view_stock_valuation_tree" model="ir.ui.view">
+            <field name="name">uni.stock_account.stock_valuation_layer.view.tree</field>
+            <field name="model">stock.valuation.layer</field>
+            <field name="inherit_id" ref="stock_account.stock_valuation_layer_tree"/>
+            <field name="arch" type="xml">
+                
+                    <xpath expr="//tree[@js_class='inventory_report_list']/field[@name='product_id']" position="after">
+                        <field name='ref'/>
+                    </xpath>
+                
+            </field>
+    </record>
+
+
+    </data>
+</odoo>

@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <record id="cuz_order_type_form" model="ir.ui.view">
+            <field name="name">cuz.order.type.form</field>
+            <field name="model">order.type</field>
+            <field name="arch" type="xml">
+                <form string="Order Type">
+                    <sheet>
+                        <group>
+
+                                <field name="name"/>
+
+                        </group>
+                    </sheet>
+                </form>
+            </field>
+
+        </record>
+        <record id="view_order_type_tree_cuz" model="ir.ui.view">
+            <field name="name">order.type.tree</field>
+            <field name="model">order.type</field>
+            <field name="arch" type="xml">
+                <tree>
+                    <field name="name"/>
+                </tree>
+            </field>
+        </record>
+        <record id="order_type_menu_action" model="ir.actions.act_window">
+            <field name="name">Order Type</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">order.type</field>
+            <field name="view_mode">tree,form</field>
+            <field name="help" type="html">
+                <div t-name="activity-box">
+                <p class="o_view_nocontent_smiling_face">
+                    Create Order Type!
+                </p>
+                </div>
+            </field>
+        </record>
+        <menuitem id="menu_order_type" name="Order Type"
+                  parent="repair.repair_menu_config"
+                  action="order_type_menu_action" sequence="12"/>
+
+    </data>
+</odoo>

@@ -1,0 +1,33 @@
+<odoo>
+    <data>
+        <record id="product_pricelist_form_uni" model="ir.ui.view">
+            <field name="name">product.pricelist.form.uni</field>
+            <field name="model">product.pricelist</field>
+            <field name="inherit_id" ref="product.product_pricelist_view"/>
+            <field name="arch" type="xml">
+                <field name="currency_id" position="after">
+                    <field name="is_repair_pricelist"/>
+                </field>
+                <xpath expr="//tree/field[@name='date_end']" position="after">
+                    <field name="pricelist_remark"/>
+                </xpath>
+            </field>
+        </record>
+
+        <record id="product_pricelist_item_form_view_uni" model="ir.ui.view">
+            <field name="name">product.pricelist.item.form.uni</field>
+            <field name="model">product.pricelist.item</field>
+            <field name="inherit_id" ref="product.product_pricelist_item_form_view"/>
+            <field name="arch" type="xml">
+                <xpath expr="//form/sheet/group[3]/group[3]/field[@name='company_id']" position="after">
+                    <field name="pricelist_remark"/>
+                </xpath>
+            </field>
+        </record>
+
+
+    </data>
+</odoo>
+
+
+

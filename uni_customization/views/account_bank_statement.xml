@@ -1,0 +1,30 @@
+<odoo>
+    <data>
+
+        <record id="uni_view_bank_statement_form" model="ir.ui.view">
+            <field name="name">uni.account.bank.statement.view.form</field>
+            <field name="inherit_id" ref="account.view_bank_statement_form"/>
+            <field name="model">account.bank.statement</field>
+            <field name="priority" eval="15"/>
+            <field name="arch" type="xml">
+
+                <xpath expr="/form/sheet/notebook/page/field[@name='line_ids']/tree/field[@name='partner_id']" position="replace">
+                    <field name="partner_id" attrs="{'readonly': [('parent.state', '!=', 'open')]}"
+                           options="{'no_create': True}"
+                           domain="['|', ('parent_id','=', False), ('is_company','=',True)]"/>
+			    </xpath>
+            </field>
+        </record>
+        <record id="view_bank_statement_search_inherit" model="ir.ui.view">
+            <field name="name">account.bank.statement.search.inherit</field>
+            <field name="model">account.bank.statement</field>
+            <field name="inherit_id" ref="account.view_bank_statement_search"/>
+            <field name="arch" type="xml">
+                <xpath expr="//search" position="inside">
+                    <field name='label' string='Label'/>
+                </xpath>
+            </field>
+        </record>
+
+    </data>
+</odoo>

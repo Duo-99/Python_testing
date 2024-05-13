@@ -1,0 +1,149 @@
+<odoo>
+    <data>
+        <record model="ir.ui.view" id="stock_valuation_layer_picking_inherit_uni">
+            <field name="name">stock.valuation.layer.picking.inherit_uni</field>
+            <field name="model">stock.picking</field>
+            <field name="inherit_id" ref="stock_account.stock_valuation_layer_picking"/>
+            <field name="groups_id" eval="[(6, 0, [ref('uni_customization.inventory_valuation_user') ])]"/>
+            <field name="arch" type="xml">
+                <button name="action_view_stock_valuation_layers" position="attributes">
+                    <attribute name="invisible">True</attribute>
+                </button>
+            </field>
+        </record>
+        <record id="customize_vpicktree" model="ir.ui.view">
+            <field name="name">customize.stock.picking.tree</field>
+            <field name="model">stock.picking</field>
+            <field name="inherit_id" ref="stock.vpicktree"/>
+            <field name="arch" type="xml">
+                <field name="scheduled_date" position="replace">
+                    <field name="scheduled_date" optional="show"
+                           attrs="{'invisible':[('state', 'in', ('done', 'cancel'))]}"/>
+                </field>
+            </field>
+        </record>
+        <record id="customize_view_picking_form" model="ir.ui.view">
+            <field name="name">customize.stock.picking.form</field>
+            <field name="model">stock.picking</field>
+            <field name="inherit_id" ref="stock.view_picking_form"/>
+            <field eval="12" name="priority"/>
+            <field name="arch" type="xml">
+                <!--                <xpath expr="//field[@name='move_line_ids_without_package']" position="attributes">-->
+                <!--                    <attribute name="options">{'create':False}</attribute>-->
+                <!--                </xpath>-->
+                <xpath expr="//form/sheet/notebook/page[2]/field/tree/field[@name='quantity_done']" position="after">
+                    <field name="general_remark"/>
+                    <field name="remark"/>
+                </xpath>
+                <xpath expr="//form/sheet/group/group[1]/field[@name='partner_id']" position="replace">
+                    <field name="partner_id" options="{'no_create': True}" nolabel="1"/>
+                </xpath>
+                <xpath expr="//form/sheet/group/group[1]/field[@name='picking_type_id']" position="replace">
+                    <field name="picking_type_id" options="{'no_create': True}"
+                           attrs="{'invisible': [('hide_picking_type', '=', True)], 'readonly': [('state', '!=', 'draft')]}"/>
+                </xpath>
+                <xpath expr="//form/sheet/notebook/page[2]/field/tree/field[@name='product_id']" position="replace">
+                    <field name="product_id" required="1" context="{'default_detailed_type': 'product'}"
+                           options="{'no_create': True}"
+                           attrs="{'readonly': ['|', '&amp;', ('state', '!=', 'draft'), ('additional', '=', False), ('move_lines_count', '&gt;', 0)]}"/>
+                </xpath>
+            </field>
+        </record>
+        <record id="uni_package_level_form_view" model="ir.ui.view">
+            <field name="name">Package Level</field>
+            <field name="model">stock.package_level</field>
+            <field name="inherit_id" ref="stock.package_level_form_view"/>
+            <field name="arch" type="xml">
+                <field name="lot_id" position="after">
+                    <field name="expir_date" groups="stock.group_production_lot" readonly="1"/>
+                </field>
+            </field>
+        </record>
+
+        <record id="inherited_stock_view_move_line_form" model="ir.ui.view">
+             <field name="name">inherited.stock.view.move.form</field>
+            <field name="model">stock.move.line</field>
+            <field name="inherit_id" ref="stock.view_move_line_form"/>
+            <field name="arch" type="xml">
+                <field name="reference" position="after">
+                    <field name="source_ref" widget="many2one_tags" attrs="{'invisible': [('source_ref', '=', False)]}"/>
+                </field>
+            </field>
+        </record>
+        <record id="uni_view_stock_move_line_operation_tree" model="ir.ui.view">
+            <field name="name">stock.move.line.operations.tree</field>
+            <field name="model">stock.move.line</field>
+            <field name="inherit_id" ref="stock.view_stock_move_line_operation_tree"/>
+            <field name="priority">1000</field>
+            <field name="arch" type="xml">
+                <field name="lot_name" position="after">
+                    <field name="expir_date" groups="stock.group_production_lot"
+                           readonly="1"
+                           invisible="not context.get('show_lots_m2o')"
+                    />
+                </field>
+            </field>
+        </record>
+
+
+        <record id="uni_cuz_view_move_line_tree" model="ir.ui.view">
+            <field name="name">uni.stock.move.line.tree</field>
+            <field name="model">stock.move.line</field>
+            <field name="inherit_id" ref="stock.view_move_line_tree"/>
+            <field name="arch" type="xml">
+                <field name="lot_id" position="after">
+                    <field name="origin" readonly="1"/>
+                    <field name="partner_id"/>
+                    <field string="Expiration Date" name="expir_date" groups="stock.group_production_lot" readonly="1"/>
+                </field>
+            </field>
+        </record>
+
+        <record id="uni_cuz_view_move_line_tree_detailed" model="ir.ui.view">
+            <field name="name">uni.stock.move.line.tree.detailed</field>
+            <field name="model">stock.move.line</field>
+            <field name="inherit_id" ref="stock.view_move_line_tree_detailed"/>
+            <field name="priority">25</field>
+            <field name="arch" type="xml">
+
+                <field name="lot_id" position="after">
+                    <field name="expir_date" string="Expiration Date" groups="stock.group_production_lot" readonly="1"/>
+                </field>
+            </field>
+        </record>
+
+        <record id="uni_cuz_view_move_line_form" model="ir.ui.view">
+            <field name="name">uni.stock.move.line.form</field>
+            <field name="model">stock.move.line</field>
+            <field name="inherit_id" ref="stock.view_move_line_form"/>
+            <field name="arch" type="xml">
+
+                <field name="lot_id" position="after">
+                    <field name="expir_date" string="Expiration Date" readonly="1" groups="stock.group_production_lot"
+                           context="{'default_product_id': product_id, 'active_picking_id': picking_id, 'default_company_id': company_id}"
+                           attrs="{'invisible': [('lot_id', '=', False),('lot_name', '!=', False)]}"/>
+                </field>
+
+            </field>
+        </record>
+
+        <record id="uni_view_stock_move_line_detailed_operation_tree" model="ir.ui.view">
+            <field name="name">uni.stock.move.line.operations.tree</field>
+            <field name="model">stock.move.line</field>
+            <field name="inherit_id" ref="stock.view_stock_move_line_detailed_operation_tree"/>
+            <field name="priority">1000</field>
+            <field name="arch" type="xml">
+                <field name="lot_id" position="before">
+                    <field name="demand_qty" string="Demand Qty"/>
+                </field>
+                <field name="lot_name" position="before">
+
+                    <field name="expir_date" groups="stock.group_production_lot"
+                           attrs="{'column_invisible': [('parent.show_lots_text', '=', True)], 'invisible': [('lots_visible', '=', False)]}"
+                           context="{'default_product_id': product_id, 'default_company_id': company_id, 'active_picking_id': picking_id}"
+                           optional="show"/>
+                </field>
+            </field>
+        </record>
+    </data>
+</odoo>

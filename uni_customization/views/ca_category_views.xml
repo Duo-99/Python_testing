@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <record id="cuz_ca_category_form" model="ir.ui.view">
+            <field name="name">cuz.ca.category.form</field>
+            <field name="model">ca.category</field>
+            <field name="arch" type="xml">
+                <form string="CA Category">
+                    <sheet>
+                        <group>
+
+                                <field name="name"/>
+
+                        </group>
+                    </sheet>
+                </form>
+            </field>
+
+        </record>
+        <record id="view_ca_category_tree_cuz" model="ir.ui.view">
+            <field name="name">ca.category.tree</field>
+            <field name="model">ca.category</field>
+            <field name="arch" type="xml">
+                <tree>
+                    <field name="name"/>
+                </tree>
+            </field>
+        </record>
+        <record id="ca_category_menu_action" model="ir.actions.act_window">
+            <field name="name">CA Category</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">ca.category</field>
+            <field name="view_mode">tree,form</field>
+            <field name="help" type="html">
+                <div t-name="activity-box">
+                <p class="o_view_nocontent_smiling_face">
+                    Create CA Category!
+                </p>
+                </div>
+            </field>
+        </record>
+        <menuitem id="menu_ca_category" name="CA Category"
+                  parent="repair.repair_menu_config"
+                  action="ca_category_menu_action" sequence="10"/>
+
+    </data>
+</odoo>
